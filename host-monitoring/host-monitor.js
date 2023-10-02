@@ -69,17 +69,17 @@ function checkHostWithPing(host) {
   
 async function checkHostWithHTTP(host) {
     try {
-        const response = await axios.get(`https://${host}`);
+        const response = await axios.get(`http://${host}`);
         if (response.status === 200) {
-            writeMessageToLogFile(logWithTimestamp(`HTTPS SUCCESS: Host ${host} is up.`));
+            writeMessageToLogFile(logWithTimestamp(`HTTP SUCCESS: Host ${host} is up.`));
             monitorInMS = 5000;
         } else {
-            console.log(`HTTPS FAILED: Host ${host} returned a non-200 status code. Sending an email.`);
+            console.log(`HTTP FAILED: Host ${host} returned a non-200 status code. Sending an email.`);
             var message = 'Returned a non-200 status code';
             monitorInMS = sendEmail(host, message);
         }
     } catch (error) {
-        writeMessageToLogFile(logWithTimestamp(`HTTPS FAILED: Host ${host} is down. Sending an email.`));
+        writeMessageToLogFile(logWithTimestamp(`HTTP FAILED: Host ${host} is down. Sending an email.`));
         var message = 'Error: ' + error;
         monitorInMS = sendEmail(host, message);
     }
