@@ -6,8 +6,12 @@ cd S3_Sec_Tester
 python S3_Hacker.py
 ```
 
-
 # Usage
+```
+python S3_Hacker.py
+```
+
+# Configuration
 Change the variable `option` in S3_Hacker.py  
 * 1 --> Single bucket
 * 2 --> Array of bucket names 

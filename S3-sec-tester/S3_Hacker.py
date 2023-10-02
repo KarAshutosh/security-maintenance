@@ -19,134 +19,188 @@ file_path = "bucket_names_file.txt"
 # Allow using rm function
 allow_rm = False
 
+def check_access_permission(input_string):
+    if "operation: Access Denied" in input_string:
+        return True
+    else:
+        return False
+
+def write_to_log(message):
+    # Open the file in 'a' (append) mode to add messages to the end of the file.
+    # If the file doesn't exist, it will be created.
+    with open('s3-sec-tester/log.txt', 'a') as file:
+        file.write(message + '\n')
 
 def no_sign_list_s3_bucket(bucket_name):
-    print("Running the function no_sign_list_s3_bucket()")
+    write_to_log("Running the function no_sign_list_s3_bucket()")
     try:
         cmd = f"aws s3 ls s3://{bucket_name} --no-sign-request"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print("Command Output (stdout):")
-        print(result.stdout.decode('utf-8'))
+        write_to_log("Command Output (stdout):")
+        write_to_log(result.stdout.decode('utf-8'))
+        write_to_log(result.stdout.decode('utf-8'))
         
-        print("\nCommand Error (stderr):")
-        print(result.stderr.decode('utf-8'))
+        write_to_log("\nCommand Error (stderr):")
+        write_to_log(result.stderr.decode('utf-8'))
     except subprocess.CalledProcessError as e:
-        print(f"Command failed with error code {e.returncode}:")
-        print(e.stderr.decode('utf-8'))
+        write_to_log(f"Command failed with error code {e.returncode}:")
+        write_to_log(e.stderr.decode('utf-8'))
+        safe = check_access_permission(e.stderr.decode('utf-8'))
+        if safe == True:
+            print("Test passed")
+        else:
+            print("Test failed. Check s3-sec-tester/log.txt file")
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        write_to_log(f"An error occurred: {str(e)}")
+    
+    
 
 def list_s3_bucket(bucket_name):
-    print("Running the function list_s3_bucket()")
+    write_to_log("Running the function list_s3_bucket()")
     try:
         cmd = f"aws s3 ls s3://{bucket_name}"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print("Command Output (stdout):")
-        print(result.stdout.decode('utf-8'))
+        write_to_log("Command Output (stdout):")
+        write_to_log(result.stdout.decode('utf-8'))
         
-        print("\nCommand Error (stderr):")
-        print(result.stderr.decode('utf-8'))
+        write_to_log("\nCommand Error (stderr):")
+        write_to_log(result.stderr.decode('utf-8'))
     except subprocess.CalledProcessError as e:
-        print(f"Command failed with error code {e.returncode}:")
-        print(e.stderr.decode('utf-8'))
+        write_to_log(f"Command failed with error code {e.returncode}:")
+        write_to_log(e.stderr.decode('utf-8'))
+        safe = check_access_permission(e.stderr.decode('utf-8'))
+        if safe == True:
+            print("Test passed")
+        else:
+            print("Test failed. Check s3-sec-tester/log.txt file")
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        write_to_log(f"An error occurred: {str(e)}")
 
 def no_sign_mv_s3_bucket(bucket_name):
-    print("Running the function no_sign_mv_s3_bucket()")
+    write_to_log("Running the function no_sign_mv_s3_bucket()")
     try:
-        cmd = f"aws s3 mv hi.txt s3://{bucket_name}/hi.txt --no-sign-request"
+        cmd = f"aws s3 mv s3-sec-tester/hi.txt s3://{bucket_name}/hi.txt --no-sign-request"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print("Command Output (stdout):")
-        print(result.stdout.decode('utf-8'))
+        write_to_log("Command Output (stdout):")
+        write_to_log(result.stdout.decode('utf-8'))
         
-        print("\nCommand Error (stderr):")
-        print(result.stderr.decode('utf-8'))
+        write_to_log("\nCommand Error (stderr):")
+        write_to_log(result.stderr.decode('utf-8'))
     except subprocess.CalledProcessError as e:
-        print(f"Command failed with error code {e.returncode}:")
-        print(e.stderr.decode('utf-8'))
+        write_to_log(f"Command failed with error code {e.returncode}:")
+        write_to_log(e.stderr.decode('utf-8'))
+        safe = check_access_permission(e.stderr.decode('utf-8'))
+        if safe == True:
+            print("Test passed")
+        else:
+            print("Test failed. Check s3-sec-tester/log.txt file")
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        write_to_log(f"An error occurred: {str(e)}")
 
 def mv_s3_bucket(bucket_name):
-    print("Running the function mv_s3_bucket()")
+    write_to_log("Running the function mv_s3_bucket()")
     try:
-        cmd = f"aws s3 mv hi.txt s3://{bucket_name}/hi.txt"
+        cmd = f"aws s3 mv s3-sec-tester/hi.txt s3://{bucket_name}/hi.txt"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print("Command Output (stdout):")
-        print(result.stdout.decode('utf-8'))
+        write_to_log("Command Output (stdout):")
+        write_to_log(result.stdout.decode('utf-8'))
         
-        print("\nCommand Error (stderr):")
-        print(result.stderr.decode('utf-8'))
+        write_to_log("\nCommand Error (stderr):")
+        write_to_log(result.stderr.decode('utf-8'))
     except subprocess.CalledProcessError as e:
-        print(f"Command failed with error code {e.returncode}:")
-        print(e.stderr.decode('utf-8'))
+        write_to_log(f"Command failed with error code {e.returncode}:")
+        write_to_log(e.stderr.decode('utf-8'))
+        safe = check_access_permission(e.stderr.decode('utf-8'))
+        if safe == True:
+            print("Test passed")
+        else:
+            print("Test failed. Check s3-sec-tester/log.txt file")
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        write_to_log(f"An error occurred: {str(e)}")
 
 def no_sign_cp_s3_bucket(bucket_name):
-    print("Running the function no_sign_cp_s3_bucket()")
+    write_to_log("Running the function no_sign_cp_s3_bucket()")
     try:
-        cmd = f"aws s3 cp hi.txt s3://{bucket_name} --no-sign-request"
+        cmd = f"aws s3 cp s3-sec-tester/hi.txt s3://{bucket_name} --no-sign-request"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print("Command Output (stdout):")
-        print(result.stdout.decode('utf-8'))
+        write_to_log("Command Output (stdout):")
+        write_to_log(result.stdout.decode('utf-8'))
         
-        print("\nCommand Error (stderr):")
-        print(result.stderr.decode('utf-8'))
+        write_to_log("\nCommand Error (stderr):")
+        write_to_log(result.stderr.decode('utf-8'))
     except subprocess.CalledProcessError as e:
-        print(f"Command failed with error code {e.returncode}:")
-        print(e.stderr.decode('utf-8'))
+        write_to_log(f"Command failed with error code {e.returncode}:")
+        write_to_log(e.stderr.decode('utf-8'))
+        safe = check_access_permission(e.stderr.decode('utf-8'))
+        if safe == True:
+            print("Test passed")
+        else:
+            print("Test failed. Check s3-sec-tester/log.txt file")
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        write_to_log(f"An error occurred: {str(e)}")
 
 def cp_s3_bucket(bucket_name):
-    print("Running the function cp_s3_bucket()")
+    write_to_log("Running the function cp_s3_bucket()")
     try:
-        cmd = f"aws s3 cp hi.txt s3://{bucket_name}"
+        cmd = f"aws s3 cp s3-sec-tester/hi.txt s3://{bucket_name}"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print("Command Output (stdout):")
-        print(result.stdout.decode('utf-8'))
+        write_to_log("Command Output (stdout):")
+        write_to_log(result.stdout.decode('utf-8'))
         
-        print("\nCommand Error (stderr):")
-        print(result.stderr.decode('utf-8'))
+        write_to_log("\nCommand Error (stderr):")
+        write_to_log(result.stderr.decode('utf-8'))
     except subprocess.CalledProcessError as e:
-        print(f"Command failed with error code {e.returncode}:")
-        print(e.stderr.decode('utf-8'))
+        write_to_log(f"Command failed with error code {e.returncode}:")
+        write_to_log(e.stderr.decode('utf-8'))
+        safe = check_access_permission(e.stderr.decode('utf-8'))
+        if safe == True:
+            print("Test passed")
+        else:
+            print("Test failed. Check s3-sec-tester/log.txt file")
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        write_to_log(f"An error occurred: {str(e)}")
 
 def no_sign_rm_s3_bucket(bucket_name):
-    print("Running the function no_sign_rm_s3_bucket()")
+    write_to_log("Running the function no_sign_rm_s3_bucket()")
     try:
         cmd = f"aws s3 rm s3://{bucket_name}/hi.txt --no-sign-request"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print("Command Output (stdout):")
-        print(result.stdout.decode('utf-8'))
+        write_to_log("Command Output (stdout):")
+        write_to_log(result.stdout.decode('utf-8'))
         
-        print("\nCommand Error (stderr):")
-        print(result.stderr.decode('utf-8'))
+        write_to_log("\nCommand Error (stderr):")
+        write_to_log(result.stderr.decode('utf-8'))
     except subprocess.CalledProcessError as e:
-        print(f"Command failed with error code {e.returncode}:")
-        print(e.stderr.decode('utf-8'))
+        write_to_log(f"Command failed with error code {e.returncode}:")
+        write_to_log(e.stderr.decode('utf-8'))
+        safe = check_access_permission(e.stderr.decode('utf-8'))
+        if safe == True:
+            print("Test passed")
+        else:
+            print("Test failed. Check s3-sec-tester/log.txt file")
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        write_to_log(f"An error occurred: {str(e)}")
 
 def rm_s3_bucket(bucket_name):
-    print("Running the function rm_s3_bucket()")
+    write_to_log("Running the function rm_s3_bucket()")
     try:
         cmd = f"aws s3 rm s3://{bucket_name}/hi.txt"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print("Command Output (stdout):")
-        print(result.stdout.decode('utf-8'))
+        write_to_log("Command Output (stdout):")
+        write_to_log(result.stdout.decode('utf-8'))
         
-        print("\nCommand Error (stderr):")
-        print(result.stderr.decode('utf-8'))
+        write_to_log("\nCommand Error (stderr):")
+        write_to_log(result.stderr.decode('utf-8'))
     except subprocess.CalledProcessError as e:
-        print(f"Command failed with error code {e.returncode}:")
-        print(e.stderr.decode('utf-8'))
+        write_to_log(f"Command failed with error code {e.returncode}:")
+        write_to_log(e.stderr.decode('utf-8'))
+        safe = check_access_permission(e.stderr.decode('utf-8'))
+        if safe == True:
+            print("Test passed")
+        else:
+            print("Test failed. Check s3-sec-tester/log.txt file")
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        write_to_log(f"An error occurred: {str(e)}")
 
 
 def read_names_from_file(file_path):
@@ -161,15 +215,37 @@ def read_names_from_file(file_path):
     
 
 def runall(bucket_name, allow_rm):
-    no_sign_list_s3_bucket(bucket_name)
-    list_s3_bucket(bucket_name)
-    no_sign_mv_s3_bucket(bucket_name)
-    mv_s3_bucket(bucket_name)
-    no_sign_cp_s3_bucket(bucket_name)
-    cp_s3_bucket(bucket_name)
+    print("Testing configutartion of bucket " + bucket_name)
     if allow_rm == True:
+        print("Running test 1/8")
+        no_sign_list_s3_bucket(bucket_name)
+        print("Running test 2/8")
+        list_s3_bucket(bucket_name)
+        print("Running test 3/8")
+        no_sign_mv_s3_bucket(bucket_name)
+        print("Running test 4/8")
+        mv_s3_bucket(bucket_name)
+        print("Running test 5/8")
+        no_sign_cp_s3_bucket(bucket_name)
+        print("Running test 6/8")
+        cp_s3_bucket(bucket_name)
+        print("Running test 7/8")
         no_sign_rm_s3_bucket(bucket_name)
+        print("Running test 8/8")
         rm_s3_bucket(bucket_name)
+    else:
+        print("Running test 1/6")
+        no_sign_list_s3_bucket(bucket_name)
+        print("Running test 2/6")
+        list_s3_bucket(bucket_name)
+        print("Running test 3/6")
+        no_sign_mv_s3_bucket(bucket_name)
+        print("Running test 4/6")
+        mv_s3_bucket(bucket_name)
+        print("Running test 5/6")
+        no_sign_cp_s3_bucket(bucket_name)
+        print("Running test 6/6")
+        cp_s3_bucket(bucket_name)
 
 
 ## Single bucket
