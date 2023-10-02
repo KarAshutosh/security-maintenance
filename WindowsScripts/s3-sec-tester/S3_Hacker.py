@@ -14,7 +14,7 @@ bucket_names = ["ak-s3-testing", "ak-s3-testing"]
 ## File of bucket names
 # option = 3
 # Replace with file path with S3 bucket names
-file_path = "bucket_names_file.txt"
+file_path = "WindowsScripts/s3-sec-tester/bucket_names_file.txt"
 
 # Allow using rm function
 allow_rm = False
@@ -28,7 +28,7 @@ def check_access_permission(input_string):
 def write_to_log(message):
     # Open the file in 'a' (append) mode to add messages to the end of the file.
     # If the file doesn't exist, it will be created.
-    with open('s3-sec-tester/log.txt', 'a') as file:
+    with open('WindowsScripts/s3-sec-tester/log.txt', 'a') as file:
         file.write(message + '\n')
 
 def no_sign_list_s3_bucket(bucket_name):
@@ -52,7 +52,7 @@ def no_sign_list_s3_bucket(bucket_name):
     if safe == True:
             print("Test passed")
     else:
-        print("Test failed. Check s3-sec-tester/log.txt file")
+        print("Test failed. Check WindowsScripts/s3-sec-tester/log.txt file")
     
     
 
@@ -76,13 +76,13 @@ def list_s3_bucket(bucket_name):
     if safe == True:
             print("Test passed")
     else:
-        print("Test failed. Check s3-sec-tester/log.txt file")
+        print("Test failed. Check WindowsScripts/s3-sec-tester/log.txt file")
 
 def no_sign_mv_s3_bucket(bucket_name):
     write_to_log("Running the function no_sign_mv_s3_bucket()")
     safe = False
     try:
-        cmd = f"aws s3 mv s3-sec-tester/hi.txt s3://{bucket_name}/hi.txt --no-sign-request"
+        cmd = f"aws s3 mv WindowsScripts/s3-sec-tester/hi.txt s3://{bucket_name}/hi.txt --no-sign-request"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         write_to_log("Command Output (stdout):")
         write_to_log(result.stdout.decode('utf-8'))
@@ -98,13 +98,13 @@ def no_sign_mv_s3_bucket(bucket_name):
     if safe == True:
             print("Test passed")
     else:
-        print("Test failed. Check s3-sec-tester/log.txt file")
+        print("Test failed. Check WindowsScripts/s3-sec-tester/log.txt file")
 
 def mv_s3_bucket(bucket_name):
     write_to_log("Running the function mv_s3_bucket()")
     safe = False
     try:
-        cmd = f"aws s3 mv s3-sec-tester/hi.txt s3://{bucket_name}/hi.txt"
+        cmd = f"aws s3 mv WindowsScripts/s3-sec-tester/hi.txt s3://{bucket_name}/hi.txt"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         write_to_log("Command Output (stdout):")
         write_to_log(result.stdout.decode('utf-8'))
@@ -120,13 +120,13 @@ def mv_s3_bucket(bucket_name):
     if safe == True:
             print("Test passed")
     else:
-        print("Test failed. Check s3-sec-tester/log.txt file")        
+        print("Test failed. Check WindowsScripts/s3-sec-tester/log.txt file")        
 
 def no_sign_cp_s3_bucket(bucket_name):
     write_to_log("Running the function no_sign_cp_s3_bucket()")
     safe = False
     try:
-        cmd = f"aws s3 cp s3-sec-tester/hi.txt s3://{bucket_name} --no-sign-request"
+        cmd = f"aws s3 cp WindowsScripts/s3-sec-tester/hi.txt s3://{bucket_name} --no-sign-request"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         write_to_log("Command Output (stdout):")
         write_to_log(result.stdout.decode('utf-8'))
@@ -142,13 +142,13 @@ def no_sign_cp_s3_bucket(bucket_name):
     if safe == True:
             print("Test passed")
     else:
-        print("Test failed. Check s3-sec-tester/log.txt file")
+        print("Test failed. Check WindowsScripts/s3-sec-tester/log.txt file")
 
 def cp_s3_bucket(bucket_name):
     write_to_log("Running the function cp_s3_bucket()")
     safe = False
     try:
-        cmd = f"aws s3 cp s3-sec-tester/hi.txt s3://{bucket_name}"
+        cmd = f"aws s3 cp WindowsScripts/s3-sec-tester/hi.txt s3://{bucket_name}"
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         write_to_log("Command Output (stdout):")
         write_to_log(result.stdout.decode('utf-8'))
@@ -164,7 +164,7 @@ def cp_s3_bucket(bucket_name):
     if safe == True:
             print("Test passed")
     else:
-        print("Test failed. Check s3-sec-tester/log.txt file")
+        print("Test failed. Check WindowsScripts/s3-sec-tester/log.txt file")
 
 def no_sign_rm_s3_bucket(bucket_name):
     write_to_log("Running the function no_sign_rm_s3_bucket()")
@@ -186,7 +186,7 @@ def no_sign_rm_s3_bucket(bucket_name):
     if safe == True:
             print("Test passed")
     else:
-        print("Test failed. Check s3-sec-tester/log.txt file")
+        print("Test failed. Check WindowsScripts/s3-sec-tester/log.txt file")
 
 def rm_s3_bucket(bucket_name):
     write_to_log("Running the function rm_s3_bucket()")
@@ -208,7 +208,7 @@ def rm_s3_bucket(bucket_name):
     if safe == True:
             print("Test passed")
     else:
-        print("Test failed. Check s3-sec-tester/log.txt file")
+        print("Test failed. Check WindowsScripts/s3-sec-tester/log.txt file")
 
 
 def read_names_from_file(file_path):
