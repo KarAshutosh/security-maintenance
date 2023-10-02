@@ -24,7 +24,7 @@ const EMAIL_RECEIVER = process.env.EMAIL_RECEIVER;
 // Define the hosts you want to monitor
 const hostsToMonitor = ['alpha.lifesignals.com', 'us-trials.lifesignals.com'];
 
-const monitorInMS = 5000;
+var monitorInMS = 5000;
 
 // Email configuration https://support.google.com/accounts/answer/185833
 const transporter = nodemailer.createTransport({
@@ -51,15 +51,18 @@ function sendEmail(host, message) {
             writeMessageToLogFile(logWithTimestamp('Email sent:', info.response));
         }
     });
+    return 600000;
 }
 
 function checkHostWithPing(host) {
     ping.sys.probe(host, (isAlive) => {
         if (!isAlive) {
             writeMessageToLogFile(logWithTimestamp(`PING FAILED: Host ${host} is down. Trying HTTP request.`));
-            checkHostWithHTTP(host);
+            monitorInMS = checkHostWithHTTP(host);
+            return monitorInMS;
         } else {
             writeMessageToLogFile(logWithTimestamp(`PING SUCCESS: Host ${host} is up.`));
+            return 5000;
         }
     });
 }
@@ -69,22 +72,25 @@ async function checkHostWithHTTP(host) {
         const response = await axios.get(`https://${host}`);
         if (response.status === 200) {
             writeMessageToLogFile(logWithTimestamp(`HTTPS SUCCESS: Host ${host} is up.`));
+            monitorInMS = 5000;
         } else {
             console.log(`HTTPS FAILED: Host ${host} returned a non-200 status code. Sending an email.`);
             var message = 'Returned a non-200 status code';
-            sendEmail(host, message);
+            monitorInMS = sendEmail(host, message);
         }
     } catch (error) {
         writeMessageToLogFile(logWithTimestamp(`HTTPS FAILED: Host ${host} is down. Sending an email.`));
         var message = 'Error: ' + error;
-        sendEmail(host, message);
+        monitorInMS = sendEmail(host, message);
     }
+
+    return monitorInMS;
 }
 
 
 
 setInterval(() => {
     hostsToMonitor.forEach((host) => {
-        checkHostWithPing(host);
+        monitorInMS = checkHostWithPing(host);
     });
 }, monitorInMS);
