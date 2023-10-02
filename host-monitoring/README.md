@@ -40,3 +40,4 @@ node host-monitor.js
 * Edit the hostsToMonitor array in host-monitor.js to specify the hosts you want to monitor.
 * Customize the email content and recipient address in the sendEmail function within host-monitor.js.
 
+Note: If a host goes down, scans are performed every 10 minutes to prevent spam from email.
