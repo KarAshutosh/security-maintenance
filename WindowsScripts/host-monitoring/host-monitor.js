@@ -5,7 +5,6 @@ const fs = require('fs');
 require('dotenv').config();
 
 function writeMessageToLogFile(message) {
-  // Append the message to the log.txt file
   fs.appendFile('WindowsScripts/host-monitoring/log.txt', message + '\n', (err) => {
     if (err) {
       console.error('Error writing to WindowsScripts/host-monitoring/log.txt file:', err);
